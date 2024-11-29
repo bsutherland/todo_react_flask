@@ -31,20 +31,20 @@ def close_connection(exc):
         db.close()
 
 
-@app.get('/todo')
+@app.get('/api/todo')
 def get_todos():
     todos = query_db('SELECT id, text, done FROM todo ORDER BY id')
     return [dict(row) for row in todos]
 
 
-@app.post('/todo')
+@app.post('/api/todo')
 def add_todo():
     text = request.json['text']
     query_db('INSERT INTO todo(text) VALUES (?)', (text,))
     return get_todos(), 201
 
 
-@app.put('/todo/<id>')
+@app.put('/api/todo/<id>')
 def toggle_done(id):
     query_db('UPDATE todo SET done=((done | 1) - (done & 1)) WHERE id=?', (id,))
     return get_todos(), 200

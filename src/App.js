@@ -6,7 +6,7 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    fetch('/todo').then(res => res.json()).then(data => {
+    fetch('/api/todo').then(res => res.json()).then(data => {
       setTodos(data);
     });
   }, []);
@@ -25,7 +25,7 @@ function ToDoInput({ setTodos}) {
   const [todoText, setTodoText] = useState('');
 
   const addTodo = () => {
-    fetch('/todo', {
+    fetch('/api/todo', {
       method: 'POST',
       headers:  { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: todoText})
@@ -44,7 +44,7 @@ function ToDoInput({ setTodos}) {
 
 function ToDo({ todo, setTodos }) {
   const toggleDone = (id) => {
-    fetch(`/todo/${id}`, {
+    fetch(`/api/todo/${id}`, {
       method: 'PUT'
     }).then(res => res.json()).then(data => setTodos(data));;
   }
