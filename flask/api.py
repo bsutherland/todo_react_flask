@@ -41,10 +41,10 @@ def get_todos():
 def add_todo():
     text = request.json['text']
     query_db('INSERT INTO todo(text) VALUES (?)', (text,))
-    return '', 201
+    return get_todos(), 201
 
 
 @app.put('/todo/<id>')
 def toggle_done(id):
     query_db('UPDATE todo SET done=((done | 1) - (done & 1)) WHERE id=?', (id,))
-    return '', 204,
+    return get_todos(), 200
